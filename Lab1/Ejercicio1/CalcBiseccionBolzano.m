@@ -1,4 +1,4 @@
-func = input('Ingresa una función en terminos de x: ','s');
+func = input('Ingresa una función en terminos de x: ', 's');
 f = inline(func,'x');
 delta = input('Ingresa un valor de tolerancia delta: ');
 while 1   
@@ -13,6 +13,4 @@ end
 format short
 root = BiseccionBolzano(f, a, b, delta);
 result = ['La aproximación de la raíz de la función' ' ' func ' en el intervalo [' num2str(a) ', '  num2str(b)  '] es:' ' ' num2str(root)];
-disp(result)
-%disp(strcat('La aproximación de la raíz de la función',{' '} ,func ,' en el intervalo [', num2str(a),', ', num2str(b) ,'] es:',{' '}, num2str(root)));
-%disp('La aproximación de la raíz de la función' + func + ' en el intervalo [' + num2str(a) + ', ' + num2str(b) + '] es:' + num2str(root));
+disp(result);
