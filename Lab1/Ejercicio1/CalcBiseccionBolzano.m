@@ -12,4 +12,5 @@ while 1
 end
 format short
 root = BiseccionBolzano(f, a, b, delta);
-disp(newline + "La aproximación de la raíz de la función en el intervalo [" + num2str(a) + ", " + num2str(b) + "] es: " + num2str(root) + newline);
+%disp(newline + "La aproximación de la raíz de la función en el intervalo [" + num2str(a) + ", " + num2str(b) + "] es: " + num2str(root) + newline);
+disp(root);
