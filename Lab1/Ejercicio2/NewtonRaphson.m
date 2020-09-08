@@ -1,5 +1,5 @@
-function tab = NewtonRaphson(f, p_0, delta)
-    names = {'K', 'Pk', 'Pk+1 - Pk', 'f(Pk)'};
+function table = NewtonRaphson(f, p_0, delta)
+    names = {'k', 'pk', 'pk+1 - pk', 'f(pk)'};
     values = [];
     i = 1;
     df = diff(f);
@@ -9,11 +9,11 @@ function tab = NewtonRaphson(f, p_0, delta)
     while(abs(f(p_k)) > delta)
         p_km1 = p_k;
         p_k = p_k - f(p_k)/df(p_k);
-        values(i,1) = i-1;
-        values(i,2) = p_km1;
-        values(i,3) = p_k - p_km1;
-        values(i,4) = f(p_k);
+        values(i, 1) = i - 1;
+        values(i, 2) = p_km1;
+        values(i, 3) = p_k - p_km1;
+        values(i, 4) = f(p_km1);
         i = i + 1;
     end
-    tab = array2table(values, 'VariableNames', names);
+    table = array2table(values, 'VariableNames', names);
 end

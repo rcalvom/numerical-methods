@@ -10,7 +10,7 @@ while 1
         break;
     end
 end
-format short
 root = BiseccionBolzano(f, a, b, delta);
-%disp(newline + "La aproximación de la raíz de la función en el intervalo [" + num2str(a) + ", " + num2str(b) + "] es: " + num2str(root) + newline);
+disp(newline + "La tabla generada en el método numérico es la siguiente: " + newline);
 disp(root);
+disp(newline + "La aproximación de la raíz de la función en el intervalo [" + num2str(a) + ", " + num2str(b) + "] es: x = " + num2str(root(height(root), 3).Variables) + newline);
