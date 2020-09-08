@@ -26,7 +26,7 @@ while 1
     if strcmp(option, 'y') || strcmp(option, 'n')
         break;
     else
-        disp('Por favor ingrese la letra y en caso de que desee ver la grafica, en caso contrario digite n.');
+        disp("Por favor ingrese la letra ""y"" en caso de que desee ver la gráfica, en caso contrario digite ""n""." + newline);
     end
 end
 if option == 'y'
@@ -38,12 +38,15 @@ if option == 'y'
         a = b;
         b = tmp;
     end
-    a = a - (b - a);
-    b = b + (b - a);
-    x = a:0.001:b;
+    a = a - (b - a) * 10;
+    b = b + (b - a) * 10;
+    x = a:(b - a)/200:b;
     y = func(x);
     plot(x, y);
     xlabel('x');
     ylabel('f(x)');
+    title('Gráfica de la función.');
+    xline(0);
+    yline(0);
     grid;
 end

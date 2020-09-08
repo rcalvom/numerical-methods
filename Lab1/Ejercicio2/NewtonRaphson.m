@@ -40,6 +40,13 @@ function table = NewtonRaphson(f, p_0, delta)
         values(i, 4) = f(p_km1);
         i = i + 1;
     end
+    p_km1 = p_k;
+    p_k = p_k - f(p_k)/df(p_k);
+    values(i, 1) = i - 1;
+    values(i, 2) = p_km1;
+    values(i, 3) = p_k - p_km1;
+    values(i, 4) = f(p_km1);
+    i = i + 1;
 
     % Una vez termina el algoritmo y los valores de cada iteración fueron
     % guardados en el arreglo "values" se utiliza la función "array2table"
