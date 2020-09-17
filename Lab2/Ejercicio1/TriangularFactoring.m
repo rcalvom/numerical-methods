@@ -1,6 +1,5 @@
 function matrix = TriangularFactoring(M, B)
     matrix = [M B];
-
     for a = 1 : size(matrix, 1);
         row = a + 1;
         while matrix(a, a) == 0;
@@ -11,10 +10,9 @@ function matrix = TriangularFactoring(M, B)
                     matrix(row, b) = temp;    
                 end
             else
-               error("\nLa matriz ingresada es singular.\n");
+                error("\nLa matriz ingresada es singular, no se puede factorizar.\n");
             end
         end
-
         for b = a + 1 : size(matrix, 1);
             matrix(b, a) = matrix(b, a) / matrix(a, a);
         end
@@ -23,7 +21,5 @@ function matrix = TriangularFactoring(M, B)
                 matrix(b, c) = matrix(b, c) - matrix(b, a) * matrix(a, c);
             end
         end
-
     end
-    
 end
