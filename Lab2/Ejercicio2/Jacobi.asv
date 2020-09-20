@@ -23,13 +23,9 @@ function X = Jacobi(A, B, P0)
     X = zeros(10, s+1);
     for i = 1 : 15
         XK = DB + (DLU*XK);
-        X(i, 1) = i;
+        X(i, 1) = 
         for j = 1:s
             X(i,j+1) = XK(j, 1);
         end
     end
-    
-    names = ["K" "X_K" "Y_K" "Z_K"]
-    X = array2table(X, 'VariableNames', names);
-
 end
