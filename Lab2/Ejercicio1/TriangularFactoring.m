@@ -1,5 +1,5 @@
-function matrix = TriangularFactoring(M)
-    matrix = M;
+function matrix = TriangularFactoring(M, B)
+    matrix = [M B];
     for a = 1 : size(matrix, 1);
         if matrix(a, a) == 0;
             row = 0;
@@ -23,7 +23,7 @@ function matrix = TriangularFactoring(M)
             matrix(b, a) = matrix(b, a) / matrix(a, a);
         end
         for b = a + 1 : size(matrix, 1);
-            for c = a + 1 : size(matrix, 2);
+            for c = a + 1 : size(matrix, 2) - 1;
                 matrix(b, c) = matrix(b, c) - matrix(b, a) * matrix(a, c);
             end
         end
