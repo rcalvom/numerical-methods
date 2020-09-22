@@ -26,9 +26,23 @@ P0 = input("Ingresa las aproximación inicial: ");
 %Solicita un valor delta como parámetro de finalización del método
 delta = input("Ingrese un valor delta para la condicion de parada: ");
 
+disp(newline)
+
 %Llama a la función que aplica el método pasandole los parametros
 %solicitados
 X = Jacobi(A, B, P0, delta);
 
-%Muestra la solución obtenida
-disp(X);
+%Muestra la tabla con la información de cada una de las iteraciones
+disp(X, newline);
+
+disp("Los valores que solucionan el sistema son: " + newline);
+
+%Vector con la solución del sistema
+X_s = zeros(1, width(X) - 1);
+
+for r = 2 : width(X)
+    X_s(1, r - 1) = X(height(X), r).Variables;
+end
+
+%Muestra la solución en consola
+disp(X_s)
