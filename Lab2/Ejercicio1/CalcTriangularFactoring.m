@@ -12,12 +12,40 @@ LU = TriangularFactoring(A, B);
 B = LU(1 : size(LU, 1), size(LU, 2));
 LU = LU(1 : size(LU, 1), 1 : size(LU, 2) - 1);
 
+% Se obtiene la matriz triangular inferior L a partir de la matriz LU
+L = eye(size(LU, 1));
+
+for a = 2 : size(L, 1);
+    for b = 1 : a - 1
+        L(a, b) = LU(a, b);
+    end
+end
+
+% Se obtiene la matriz triangular superior U a partir de la matriz LU
+U = zeros(size(LU, 1));
+
+for a = 1 : size(U, 1);
+    for b = a : size(U, 1);
+        U(a, b) = LU(a, b);
+    end
+end
+
 % Se muestra en pantalla la factorización LU de la matriz A
-disp(newline + "La factorización de la matriz A en LU representado en la misma matriz es la siguiente: " + newline);
-disp(LU);
+disp(newline + "La factorización de la matriz A en LU es la siguiente: " + newline);
 
-% Se muestra en pantalla la solución al sistema de ecuaciones AX = B
-disp(newline + "Por lo tanto la solución al sistema de ecuaciones AX = B usando el método de factorización LU es:" + newline);
+L
+U
 
-X = UpperSolver(LU, LowerSolver(LU, B));
-disp(X);
+% Se calculan los valores de los vectores Y y X usando el método de la factorización triangular.
+Y = LowerSolver(L, B);
+X = UpperSolver(U, Y);
+
+% Se muestra en pantalla la solución al sistema de ecuaciones LY = B
+disp(newline + "La solución al sistema de ecuaciones LY = B es:" + newline);
+
+Y
+
+% Se muestra en pantalla la solución al sistema de ecuaciones UX = Y
+disp(newline + "Finalmente, la solución al sistema de ecuaciones UX = Y es:" + newline);
+
+X
