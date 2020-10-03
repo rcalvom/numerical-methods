@@ -5,15 +5,28 @@ f = inline(input(newline + "Ingrese la función f(x) a evaluar: "));
 a = input("Ingrese el valor de a del intervalo [a, b] donde se realizará la interpolación: ");
 b = input("Ingrese el valor de b del intervalo [a, b] donde se realizará la interpolación: ");
 g = input("Indique el grado del polinomio resultante de la interpolación: ");
-P = inline(LagrangeInterpolation(f, a, b, g));
+
+for k = 0 : g;
+    X(k + 1, 1) = a + k * (b - a)/g ;
+    X(k + 1, 2) = f(X(k + 1, 1));
+end
+
+P = inline(LagrangeInterpolation(X, g));
 P = vpa(expand(P(x)));
 
 disp(newline + "El polinomio de grado " + g + " que aproxima a la función en el intervalo [" + a +", " + b + "] es: "+ newline);
 disp("P(x) = ");
 disp(P);
 
+E = inline(LagrangeError(f, X, g));
+E = vpa(expand(E(x)));
+
+disp(newline + "La cota superior del error de esta interpolación polinómica es: "+ newline);
+disp("E(x) = ");
+disp(E);
+
 while 1
-    option = input('¿Desea ver la gráfica de la función f(x)? (y/n): ', 's');
+    option = input(newline + "¿Desea ver la gráfica de la función f(x)? (y/n): ", 's');
     if strcmp(option, 'y') || strcmp(option, 'n')
         break;
     else
