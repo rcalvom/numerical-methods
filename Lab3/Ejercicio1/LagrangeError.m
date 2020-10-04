@@ -1,4 +1,7 @@
 function E = LagrangeError(f, X, g)
+    % La siguiente función implementa el calculo de error de Lagrange.
+    % Parámetros: conjunto de puntos X, grado n, número de iteración k.
+    % Resultado: valor del error obtenido.
     syms x;
     E = 1;
     n = g + 1;
