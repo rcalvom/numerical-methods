@@ -1,4 +1,4 @@
-function polinomio = PolinomioNewton(matriz)
+function polinomio = PolinomioNewton(matriz, grado, pivote)
     % La siguiente función implementa el método del polinomio interpolador de Newton.
     % Parámetros: matriz con las abcsisas y ordenadas correspondientes a las parejas
     % (x, y) que se conocen de la función a aproximar.
@@ -29,14 +29,14 @@ function polinomio = PolinomioNewton(matriz)
 
     % Se almacena el primer valor del polinomio, el cual corresponde a la primera
     % x de la matriz recibida por parámetro.
-    polinomio = strcat(polinomio, num2str(matriz(1, 2)));
+     polinomio = strcat(polinomio, num2str(matriz(pivote, 2)));
 
     % En el siguiente bucle se suma al polinomio cada uno de los términos correspondientes
     % a (s(s - 1)(s - 2)...(s - (n - 1)) / n!) * delta ^ n f[x_i].
-    for i = 1 : n - 1
+    for i = 1 : 1 : grado
 
         % Variable que almacenará el término a_k.
-        ak = values(i + 1, i + 1) / factorial(i);
+        ak = values(i+pivote, i+1) / factorial(i);
 
         % Variable que almacenará la productoria de s(s - 1) ... s( - (n - 1)).
         productoria = "s";
