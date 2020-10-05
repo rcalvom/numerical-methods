@@ -49,4 +49,6 @@ function polinomio = PolinomioNewton(matriz, grado, pivote)
         % Se suma el término obtenido al polinomio.
         polinomio = strcat(polinomio, "+", num2str(ak), "*", productoria);
     end
+    disp(newline + "Tabla de diferencias divididas: " + newline);
+    disp(values);
 end
