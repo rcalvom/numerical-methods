@@ -22,8 +22,10 @@ disp(expand(polinomio(s)));
 % Se define la función s(x) como el cociente (x - x_1) / (x_2 - x).
 s = inline( strcat("(x-", num2str(matriz(1, 1)), ")/", num2str(matriz(2,1) - matriz(1, 1))), "x");
 
+delta = matriz(size(matriz, 1), 1) - matriz(1,1);
+
 % Intervalo de abscisas para la gráfica del polinomio interpolador.
-x = matriz(1,1) : 0.01 : matriz(size(matriz, 1), 1);
+x = matriz(1,1) - delta : 0.01 : matriz(size(matriz, 1), 1) + delta;
 
 % Se gráfica el polinomio interpolador de Newton.
 subplot(1, 2, 1);
