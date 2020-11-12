@@ -44,7 +44,7 @@ for a = 1 : size(U, 1)
     end
 end
 Y = LowerSolver(L, B);
-X = UpperSolver(U, Y);
+X = UpperSolver(U, Y)
 
 disp(newline + "Es así como se concluye que la recta y = ax+b que minimiza el error cuadrático medio del conjunto de puntos dado es: " + newline);
 
