@@ -27,19 +27,24 @@ function polinomio = DerivateNewtonPolinomio(X)
     polinomio = 0;
 
     % Se construye adecuadamente el polinomio derivada usando la información de las diferencias divididas.
-    for a = 1 : size(X, 1) - 2;
-        a_k = values(a + 1, a + 2);
-        s = 0;
-        for b = 1 : a;
-            product = 1;
-            for c = 1 : a;
-                if b ~= c;
-                    product = product * (x - values(c, 1));
+
+    if size(X, 1) == 2;
+        polinomio = polinomio + values(2, 3);
+    else
+        for a = 1 : size(X, 1) - 2;
+            a_k = values(a + 1, a + 2);
+            s = 0;
+            for b = 1 : a;
+                product = 1;
+                for c = 1 : a;
+                    if b ~= c;
+                        product = product * (x - values(c, 1));
+                    end
                 end
+                s = s + product;
             end
-            s = s + product;
+            polinomio = polinomio + (a_k * s);
         end
-        polinomio = polinomio + (a_k * s);
     end
     
 end

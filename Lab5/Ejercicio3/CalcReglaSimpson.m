@@ -10,7 +10,7 @@ a = input("Ingrese el límite inferior del intervalo: ");
 b = input("Ingrese el límite superior del intervalo: ");
 
 % Se solicita al usuario el número de nodos M
-M = input("Ingrese el número de nodos: ");
+M = (input("Ingrese el número de nodos: ") - 1)/2;
 
 % Se calcula el valor de h correspondiente al espacio entre los x_k
 h = (b - a) / (2 * M);

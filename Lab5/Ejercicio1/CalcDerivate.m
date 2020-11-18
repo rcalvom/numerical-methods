@@ -7,28 +7,39 @@ x_0 = input("Ingrese el valor x_0 donde desea evaluar f'(x_0): ");
 
 if class(f) == "sym";
     isfunction = true;
-    a = input("Ingrese el valor de a del intervalo [a, b] donde se realizará la aproximación: ");
-    b = input("Ingrese el valor de b del intervalo [a, b] donde se realizará la interpolación aproximación: ");
-    g = input("Indique la cantidad de puntos equidistantes que se tomarán en cuenta en la aproximación: ");
+    
+    k = input("indique el incremento de las diferencias centradas: "); 
+    h = input("Indique la cantidad de puntos equidistantes que se tomarán en cuenta en la aproximación: ");
+
     f = inline(f);
-    for k = 0 : g;
-        X(k + 1, 1) = a + k * (b - a)/g ;
-        X(k + 1, 2) = f(X(k + 1, 1));
+    X = zeros(h, 2);
+    
+    for a = 1 : h;
+        X(a, 1) = x_0 + floor((a + 1) / 2) * k * (-1)^(a + 1);
+        X(a, 2) = f(X(a, 1));
     end
+    a = min(X(1 : size(X, 1), 1)');
+    b = max(X(1 : size(X, 1), 1)');
 else
     isfunction = false;
     X = f;
     a = X(1, 1);
     b = X(size(X, 1), 1);
-    g = size(X, 1) - 1;
 end
 
 disp(newline + "La función derivada simplificada del polinomio interpolador de Newton del conjunto de puntos dado es: ");
 
 % Se calcula la derivada de la interpolación polinómica de Newton.
-dP = inline(DerivateNewtonPolinomio(X));
-y_0 = dP(x_0);
-dP = vpa(expand(dP(x)));
+dv = DerivateNewtonPolinomio(X);
+if class(dv) == "double";
+    dP = dv;
+    y_0 = dv;
+else
+    dP = inline(dv);
+    y_0 = dP(x_0);
+    dP = vpa(expand(dP(x)));
+end
+
 disp(newline + "P'(x) = ");
 disp(dP);
 
@@ -36,7 +47,7 @@ disp(dP);
 disp(newline + "Por lo tanto, el valor de P'(x_0) es: ");
 disp(newline + "P'(x_0) = " + num2str(y_0));
 
-% Se pregunta si se desea visualizar ls gráficas.
+% Se pregunta si se desea visualizar las gráficas.
 while true
     option = input(newline + "¿Desea ver las gráficas del método? (y/n): ", 's');
     if strcmp(option, 'y') || strcmp(option, 'n');
@@ -48,7 +59,7 @@ end
 
 % En caso que si se desee ver las gráficas, se calculan todos los putnos necesarios.
 if option == 'y';
-    vx_0 = linspace(a - (b - a)/2, b + (b - a)/2);
+    vx_0 = linspace(a - 100 * (b - a)/2, b + 100 * (b - a)/2);
 
     vx_1 = (X(1 : size(X, 1), 1))';
     vy_1 = (X(1 : size(X, 1), 2))';
