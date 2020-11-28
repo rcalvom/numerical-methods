@@ -9,7 +9,7 @@ f = inline(func, "x");
 a = input("Ingrese el límite inferior del intervalo: ");
 b = input("Ingrese el límite superior del intervalo: ");
 
-% Se solicita al usuario el número de nodos M
+% Se solicita al usuario el número de nodos N
 M = (input("Ingrese el número de nodos: ") - 1)/2;
 
 % Se calcula el valor de h correspondiente al espacio entre los x_k
