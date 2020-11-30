@@ -6,7 +6,13 @@ x_a = input("Ingrese el valor de x(a): ");
 b = input("Ingrese el límite superior del intervalo ""b"": ");
 x_b = input("Ingrese el valor de x(b): ");
 
-N = input("Ingrese el número de subintervalos ""N"": ");
+I = input("Ingrese el número de iteraciones que desea realizar: ");
+
+N = input("Ingrese el vector de subintervalos ""N"" correspondiente: ");
+
+if I ~= size(N, 2)
+    error("El tamaño del vector de subintervalos no corresponde con el tamaño del vector");
+end
 
 known = false;
 
@@ -25,27 +31,63 @@ if option == "y"
     f = inline(func, "t");
 end
 
-disp(newline + "La aproximación obtenida se representa con el siguiente conjunto de parejas {t, x}:" + newline);
-
 occ = strfind(equation, "x");
 p = inline(char(extractBetween(equation, 1, occ(1) - 2)), "t");
 q = inline(char(extractBetween(equation, occ(1) + 5, occ(2) - 2)), "t");
 r = inline(char(extractBetween(equation, occ(2) + 5, strlength(equation))), "t");
 
-F = FiniteDifferenceMethod(p, q, r, a, b, x_a, x_b, N);
-X = F{:, 1};
-Y = F{:, 2};
+names = {'t_j', strcat('x_j1, h = ', num2str((b - a) / N(1)))};
+F = FiniteDifferenceMethod(p, q, r, a, b, x_a, x_b, N(1));
+aprox_table = array2table(F, 'VariableNames', names);
+
+X = F(:, 1);
+Y = F(:, 2);
 
 if known
-    E = zeros(N + 1, 1);
-    for index = 1 : N
-        E(index, 1) = f(X(index)) - Y(index);
+    names = {'t_j', 'e_j1'};
+    E = zeros(N(1) + 1, 2);
+    for index = 1 : N(1)
+        E(index, 1) = X(index);
+        E(index, 2) = f(X(index)) - Y(index);
     end
-    E(N + 1, 1) = 0;
-    F.e_j = E;
+    E(N(1) + 1, 1) = b;
+    E(N(1) + 1, 2) = 0;
+    error_table = array2table(E, 'VariableNames', names);
 end
 
-disp(F);
+for index1 = 2 : I
+    name = strcat('x_j', num2str(index1), ', h = ', num2str((b - a) / N(index1)));
+    F = FiniteDifferenceMethod(p, q, r, a, b, x_a, x_b, N(index1));
+    new_column = zeros(N(1) + 1, 1);
+    it = 1;
+    for index2 = 1 : 2 ^ (index1 - 1) : size(F, 1)
+        new_column(it) = F(index2, 2);
+        it = it + 1;
+    end
+    aprox_table.(name) = new_column;
+    if known
+        name = strcat('e_j', num2str(index1));
+        E = zeros(N(1) + 1, 1);
+        it = 1;
+        for index3 = 1 : 2 ^ (index1 - 1) : size(F, 1)
+            if it == (N(1) + 1)
+                break;
+            end
+            E(it) = f(X(it)) - F(index3, 2);
+            it = it + 1;
+        end
+        E(N(1) + 1, 1) = 0;
+        error_table.(name) = E;
+    end
+end
+
+disp(newline + "La siguiente tabla muestra la aproximación para diferentes valores de N:" + newline);
+disp(aprox_table);
+
+if known
+    disp(newline + "La siguiente tabla muestra el error asociado para cada valor de N:" + newline);
+    disp(error_table);
+end
 
 while true
     option = input('¿Desea ver la gráfica de la aproximación? (y/n): ', 's');
@@ -67,7 +109,7 @@ if option == "y"
         hold on;
         Y2 = f(X);
         p2 = plot(X, Y2);
-        legend([p1 p2], {'Aproximación', 'Función f(x)'});
+        legend([p1 p2], {'Aproximación', 'Función x(t)'});
         hold off;
     else
         legend([p1], {'Aproximación'});

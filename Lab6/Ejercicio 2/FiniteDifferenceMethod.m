@@ -24,17 +24,14 @@ function F = FiniteDifferenceMethod(p, q, r, a, b, x_a, x_b, N)
 
     X = M \ B;
 
-    names = {'t_j', 'x_j'};
-    values = zeros(N + 1, 2);
-    values(1, 1) = a;
-    values(1, 2) = x_a;
-    values(N + 1, 1) = b;
-    values(N + 1, 2) = x_b;
+    F = zeros(N + 1, 2);
+    F(1, 1) = a;
+    F(1, 2) = x_a;
+    F(N + 1, 1) = b;
+    F(N + 1, 2) = x_b;
 
     for index = 2 : N
-        values(index, 1) = values(index - 1, 1) + h;
-        values(index, 2) = X(index - 1);
+        F(index, 1) = F(index - 1, 1) + h;
+        F(index, 2) = X(index - 1);
     end
-
-    F = array2table(values, 'VariableNames', names);
 end
