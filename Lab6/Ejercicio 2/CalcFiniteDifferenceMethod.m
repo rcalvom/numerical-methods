@@ -11,7 +11,7 @@ I = input("Ingrese el número de iteraciones que desea realizar: ");
 N = input("Ingrese el vector de subintervalos ""N"" correspondiente: ");
 
 if I ~= size(N, 2)
-    error("El tamaño del vector de subintervalos no corresponde con el tamaño del vector");
+    error("El tamaño del vector de subintervalos no corresponde con el número de iteraciones");
 end
 
 known = false;
@@ -21,7 +21,7 @@ while true
     if strcmp(option, 'y') || strcmp(option, 'n')
         break;
     else
-        disp("Por favor ingrese la letra ""y"" en caso de que desee ver la gráfica, en caso contrario digite ""n""." + newline);
+        disp("Por favor ingrese la letra ""y"" en caso de que conozca la función, en caso contrario digite ""n""." + newline);
     end
 end
 
@@ -44,6 +44,10 @@ X = F(:, 1);
 Y = F(:, 2);
 
 if known
+    exact_column = zeros(N(1) + 1, 1);
+    for index = 1 : N(1) + 1
+        exact_column(index) = f(X(index));
+    end
     names = {'t_j', 'e_j1'};
     E = zeros(N(1) + 1, 2);
     for index = 1 : N(1)
@@ -79,6 +83,11 @@ for index1 = 2 : I
         E(N(1) + 1, 1) = 0;
         error_table.(name) = E;
     end
+end
+
+if known
+    name = 'x_j exacto';
+    aprox_table.(name) = exact_column;
 end
 
 disp(newline + "La siguiente tabla muestra la aproximación para diferentes valores de N:" + newline);
