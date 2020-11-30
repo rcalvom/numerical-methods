@@ -11,7 +11,7 @@ I = input("Ingrese el número de iteraciones que desea realizar: ");
 N = input("Ingrese el vector de subintervalos ""N"" correspondiente: ");
 
 if I ~= size(N, 2)
-    error("El tamaño del vector de subintervalos no corresponde con el número de iteraciones");
+    error("El tamaño del vector de subintervalos no corresponde con el número de iteraciones ingresado");
 end
 
 known = false;
