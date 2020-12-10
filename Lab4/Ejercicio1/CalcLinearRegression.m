@@ -97,8 +97,8 @@ if option == 'y'
     y_1 = X_k(1 : size(X_k, 1), 2)';
     p_1 = scatter(x_1, y_1, 25, 'black' ,'filled');
 
-    xline(0);
-    yline(0);
+        xline(0);
+        yline(0);
 
     hold off;
 
